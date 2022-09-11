@@ -29,13 +29,10 @@ int main(){
     for (int amt = 1; amt <= target; amt++){
         for (int cvalue : coins){ // current coin we are using to add to exisiting amt
             if (amt - cvalue >= 0){
-                if (debug) cout << dp[amt - cvalue] << " ways to make $ (cents)" << amt - cvalue << endl;
-                if (debug) cout << dp[amt] << " ways to make $ (cents)" << amt << endl;
                 dp[amt] += dp[amt-cvalue];
             }
         }
         if (debug) cout << "$ (cents)" << amt << ": " << dp[amt] << endl;
-        if (debug) cout << endl;
     }
 
     cout << "Total ways to make up $" << input << ": " << dp[target] << endl;
