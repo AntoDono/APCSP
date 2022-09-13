@@ -3,7 +3,13 @@
         "ostream": "cpp",
         "cmath": "cpp",
         "algorithm": "cpp",
+<<<<<<< HEAD
         "iostream": "cpp",
         "limits": "cpp"
     }
+=======
+        "iostream": "cpp"
+    },
+    "liveServer.settings.port": 5501
+>>>>>>> 8c7be43e5e964ca11635f85d6e4dbd3a1c48cda4
 }
