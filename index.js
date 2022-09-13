@@ -1,7 +1,7 @@
 var simulations = []
 
 const coinFlip = () => {
-    return Math.random() > 0.5
+    return Math.random() > 0.6
 }
 
 const simulate = () => {
@@ -17,9 +17,9 @@ const simulate = () => {
     update()
 }
 
-const sortlist = (arr)=> {
+const sortlist = (arr) => {
     let sorted = {}
-    arr.forEach((num)=>{
+    arr.forEach((num) => {
         if (sorted.hasOwnProperty(num)) sorted[num]++
         else sorted[num] = 1
     })
@@ -27,17 +27,16 @@ const sortlist = (arr)=> {
 }
 
 const update = () => {
-    
+
     let sorted = sortlist(simulations)
     let width = 500
     let height = 100
 
     const div = d3.select("#graph")
-        .append("svg")
         .style("font", "10px sans-serif")
         .style("text-align", "right")
         .style("color", "black")
-        .attr("width", window.innerWidth/2)
+        .attr("width", window.innerWidth / 2)
         .attr("height", window.innerHeight)
 
     div.selectAll("*").remove()
@@ -59,10 +58,24 @@ const update = () => {
     div.append("g")
         .attr("transform", `translate(50, ${width})`)
         .call(x_axis)
-    
+
     div.append("g")
         .attr("transform", "translate(50, 0)")
         .call(y_axis)
+
+    const bars = div.append("g")
+
+    let x = 100
+
+    bars.selectAll(".bar")
+        .data(simulations)
+        .enter().append("rect")
+        .attr("class", "bar")
+        // .attr("transform", "rotate(90)")
+        .attr("x", d => { x+= 10; return x } )
+        .attr("y", d => { return y_axis_line(d) } )
+        .attr("width", width/100)
+        .attr("height", d => { return sorted[d] * 10 });
 
     // div.selectAll("div")
     //     .data(Object.keys(sorted))
