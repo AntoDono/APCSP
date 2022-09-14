@@ -12,9 +12,14 @@ const simulate = () => {
     }
     let percent = Math.round(heads / total * 100)
     simulations.push(percent)
-    console.log(simulations)
     document.getElementById("result").innerHTML = `Simulated ${total} coin flips. Heads: ${percent}%`
     update()
+}
+
+const massSimulate = ()=> {
+    for (let i = 0; i < 100; i ++){
+        simulate()
+    }
 }
 
 const sortlist = (arr) => {
@@ -31,6 +36,8 @@ const update = () => {
     let sorted = sortlist(simulations)
     let width = 500
     let height = 100
+    let x = 0
+    let height_scale = 10
 
     const div = d3.select("#graph")
         .style("font", "10px sans-serif")
@@ -65,17 +72,18 @@ const update = () => {
 
     const bars = div.append("g")
 
-    let x = 100
+    const appeared = Object.keys(sorted).sort()
+    console.log(appeared)
 
     bars.selectAll(".bar")
-        .data(simulations)
+        .data(appeared)
         .enter().append("rect")
         .attr("class", "bar")
+        .attr("transform", d => {return `translate(50, ${width - (sorted[d] * height_scale)})`})
         // .attr("transform", "rotate(90)")
-        .attr("x", d => { x+= 10; return x } )
-        .attr("y", d => { return y_axis_line(d) } )
+        .attr("x", d => { return d * 5 } )
         .attr("width", width/100)
-        .attr("height", d => { return sorted[d] * 10 });
+        .attr("height", d => { return sorted[d] * height_scale });
 
     // div.selectAll("div")
     //     .data(Object.keys(sorted))
