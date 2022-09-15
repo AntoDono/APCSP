@@ -17,7 +17,7 @@ const simulate = () => {
 }
 
 const massSimulate = ()=> {
-    for (let i = 0; i < 100; i ++){
+    for (let i = 0; i < 10; i ++){
         simulate()
     }
 }
@@ -34,8 +34,11 @@ const sortlist = (arr) => {
 const update = () => {
 
     let sorted = sortlist(simulations)
-    let width = 500
-    let height = 100
+    let width = window.innerWidth/2.5
+    let height = window.innerHeight/2.5
+    let my = 500 // max y
+    let mx = 100 // max x
+    let bw = width/100 // bar width
     let x = 0
     let height_scale = 10
 
@@ -49,12 +52,12 @@ const update = () => {
     div.selectAll("*").remove()
 
     let x_axis_line = d3.scaleLinear()
-        .domain([0, height])
+        .domain([0, mx])
         .range([0, width])
 
     let y_axis_line = d3.scaleLinear()
-        .domain([0, height])
-        .range([width, 0])
+        .domain([0, my])
+        .range([height, 0])
 
     let x_axis = d3.axisBottom()
         .scale(x_axis_line)
@@ -63,7 +66,7 @@ const update = () => {
         .scale(y_axis_line)
 
     div.append("g")
-        .attr("transform", `translate(50, ${width})`)
+        .attr("transform", `translate(50, ${height})`)
         .call(x_axis)
 
     div.append("g")
@@ -79,22 +82,10 @@ const update = () => {
         .data(appeared)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("transform", d => {return `translate(50, ${width - (sorted[d] * height_scale)})`})
+        .attr("transform", d => {return `translate(50, ${height - (sorted[d] * height_scale)})`})
         // .attr("transform", "rotate(90)")
-        .attr("x", d => { return d * 5 } )
-        .attr("width", width/100)
+        .attr("x", d => { return d * bw } )
+        .attr("width", bw)
         .attr("height", d => { return sorted[d] * height_scale });
 
-    // div.selectAll("div")
-    //     .data(Object.keys(sorted))
-    //     .join("div")
-    //     .style("background", "steelblue")
-    //     .style("padding", "3px")
-    //     .style("margin", "1px")
-    //     .style("width", d => `${d * sorted[d]}px`)
-    //     .text(d => d);
-
 }
-
-// let graph = d3.select('graph')
-// graph.html("Hello world")
