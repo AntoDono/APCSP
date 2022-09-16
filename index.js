@@ -1,18 +1,19 @@
 var simulations = []
+var simulate_amt = 50
 
 const coinFlip = () => {
-    return Math.random() > 0.6
+    return Math.random() > 0.5
 }
 
 const simulate = () => {
-    let total = 50, heads = 0, tails = 0
-    for (let i = 0; i < total; i++) {
+    let heads = 0, tails = 0
+    for (let i = 0; i < simulate_amt; i++) {
         if (coinFlip()) heads++
         else tails++
     }
-    let percent = Math.round(heads / total * 100)
+    let percent = Math.round(heads / simulate_amt * 100)
     simulations.push(percent)
-    document.getElementById("result").innerHTML = `Simulated ${total} coin flips. Heads: ${percent}%`
+    document.getElementById("result").innerHTML = `Simulated ${simulate_amt} coin flips. Heads: ${percent}%`
     update()
 }
 
@@ -32,6 +33,19 @@ const sortlist = (arr) => {
 }
 
 const update = () => {
+    updateGraph()
+    updateHistory()
+}
+
+const updateHistory = () => {
+    let formatted = ""
+    simulations.forEach((d)=>{
+        formatted += `Simulated ${simulate_amt} coin flips: Heads: ${d}%\n`
+    })
+    document.getElementById("simHistory").innerText = formatted
+}
+
+const updateGraph = () => {
 
     let sorted = sortlist(simulations)
     let width = window.innerWidth/2.5
@@ -46,8 +60,8 @@ const update = () => {
         .style("font", "10px sans-serif")
         .style("text-align", "right")
         .style("color", "black")
-        .attr("width", window.innerWidth / 2)
-        .attr("height", window.innerHeight)
+        .attr("width", width + 100)
+        .attr("height", height + 100)
 
     div.selectAll("*").remove()
 
