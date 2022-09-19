@@ -1,11 +1,10 @@
 var simulations = []
-var simulate_amt = 50
 
 const coinFlip = () => {
     return Math.random() > 0.5
 }
 
-const simulate = () => {
+const simulate = (simulate_amt) => {
     let heads = 0, tails = 0
     for (let i = 0; i < simulate_amt; i++) {
         if (coinFlip()) heads++
@@ -13,13 +12,13 @@ const simulate = () => {
     }
     let percent = Math.round(heads / simulate_amt * 100)
     simulations.push(percent)
-    document.getElementById("result").innerHTML = `Simulated ${simulate_amt} coin flips. Heads: ${percent}%`
-    update()
+    update(simulate_amt)
+    console.log(simulations)
 }
 
 const massSimulate = ()=> {
-    for (let i = 0; i < 10; i ++){
-        simulate()
+    for (let i = 0; i < document.getElementById("sim").value; i ++){
+        simulate(document.getElementById("amt").value)
     }
 }
 
@@ -32,12 +31,12 @@ const sortlist = (arr) => {
     return sorted
 }
 
-const update = () => {
+const update = (simulate_amt) => {
     updateGraph()
-    updateHistory()
+    updateHistory(simulate_amt)
 }
 
-const updateHistory = () => {
+const updateHistory = (simulate_amt) => {
     let formatted = ""
     simulations.forEach((d)=>{
         formatted += `Simulated ${simulate_amt} coin flips: Heads: ${d}%\n`
@@ -90,7 +89,6 @@ const updateGraph = () => {
     const bars = div.append("g")
 
     const appeared = Object.keys(sorted).sort()
-    console.log(appeared)
 
     bars.selectAll(".bar")
         .data(appeared)

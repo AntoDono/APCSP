@@ -36,3 +36,9 @@
     border: 2px solid black;
     overflow-y: scroll;
 }
+
+.option {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
