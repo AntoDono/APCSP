@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="container center-flex">
+            <h1>Coin Flip Simulation</h1>
+            <div class="option">
+                <label>Amount of coin flips per simulation: </label><input type="number" id="amt" value="50"/>
+            </div>
+            <div class="option">
+                <label>Amount of simulations: </label><input type="number" id="sim" value="10"/>
+            </div>
+            <button onclick="massSimulate()">Simulate Coin Flip</button>
+            <div class="history">
+                <p id="simHistory">
+                </p>
+            </div>
+            
+        </div>
+        <div class="container center-flex">
+            <svg id="graph">
+            </svg> 
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
